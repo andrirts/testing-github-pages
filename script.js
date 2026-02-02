@@ -1,7 +1,7 @@
 const form = document.getElementById("signInForm");
 const table = document.getElementById("records");
 
-form.addEventListener("submit", function(e) {
+form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const name = document.getElementById("name").value;
@@ -16,6 +16,22 @@ form.addEventListener("submit", function(e) {
   row.insertCell(3).innerText = timeOut;
 
   form.reset();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const now = new Date();
+
+  // Format date to YYYY-MM-DDTHH:MM (required for datetime-local)
+  const formatDateTime = (date) => {
+    const pad = (n) => n.toString().padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
+  document.getElementById("timeIn").value = formatDateTime(now);
+
+  // Optional: auto-fill Time Out (example: 8 hours later)
+  const timeOut = new Date(now.getTime() + 1 * 60 * 60 * 1000);
+  document.getElementById("timeOut").value = formatDateTime(timeOut);
 });
 
 function exportData() {
